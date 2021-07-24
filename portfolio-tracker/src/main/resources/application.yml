@@ -10,8 +10,8 @@ management:
 spring:
   datasource:
     url: jdbc:postgresql://training-db.cqnsz9u6mm7d.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=project-2
-    username: postgres
-    password: pa55word
+    username: ${DB_USER}
+    password: ${DB_PASS}
   jpa:
     show-sql: true
     generate-ddl: true

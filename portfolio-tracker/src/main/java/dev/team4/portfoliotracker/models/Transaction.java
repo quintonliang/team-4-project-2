@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Component
 @Entity
-@Table(name = "stock-transaction")
+@Table(name = "stock_transaction")
 public class Transaction {
 
     @Id
@@ -28,14 +28,18 @@ public class Transaction {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "date")
+    private long date;
+
     public Transaction() {
     }
 
-    public Transaction(int userId, double shareAmount, double sharePrice, String note) {
+    public Transaction(int userId, double shareAmount, double sharePrice, String note, long date) {
         this.userId = userId;
         this.shareAmount = shareAmount;
         this.sharePrice = sharePrice;
         this.note = note;
+        this.date = date;
     }
 
     public int getTransactionId() {
@@ -78,17 +82,25 @@ public class Transaction {
         this.note = note;
     }
 
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return transactionId == that.transactionId && userId == that.userId && Double.compare(that.shareAmount, shareAmount) == 0 && Double.compare(that.sharePrice, sharePrice) == 0 && Objects.equals(note, that.note);
+        return transactionId == that.transactionId && userId == that.userId && Double.compare(that.shareAmount, shareAmount) == 0 && Double.compare(that.sharePrice, sharePrice) == 0 && date == that.date && Objects.equals(note, that.note);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, userId, shareAmount, sharePrice, note);
+        return Objects.hash(transactionId, userId, shareAmount, sharePrice, note, date);
     }
 
     @Override

@@ -8,4 +8,5 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     Transaction findByTransactionId(int transactionId);
     List<Transaction> findAllTransactionsByUserId(int userId);
+    List<Transaction> findAllTransactionsByDate(long date);
 }

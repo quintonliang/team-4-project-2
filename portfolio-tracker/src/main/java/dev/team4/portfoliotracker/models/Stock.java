@@ -7,6 +7,6 @@ import javax.persistence.Table;
 
 @Component
 @Entity
-@Table(name = "user-stock")
+@Table(name = "user_stock")
 public class Stock {
 }

@@ -26,17 +26,24 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction addTransaction(int userId, double shareAmount, double sharePrice, String note) {
-        Transaction txn = new Transaction(userId, shareAmount, sharePrice, note);
+    public List<Transaction> getTransactionsByDate(long date) {
+        return txnRepo.findAllTransactionsByDate(date);
+    }
+
+
+    @Override
+    public Transaction addTransaction(int userId, double shareAmount, double sharePrice, String note, long date) {
+        Transaction txn = new Transaction(userId, shareAmount, sharePrice, note, date);
         return txnRepo.save(txn);
     }
 
     @Override
-    public void updateTransaction(int transactionId, int userId, double shareAmount, double sharePrice, String note) {
+    public void updateTransaction(int transactionId, int userId, double shareAmount, double sharePrice, String note, long date) {
         Transaction txn = txnRepo.findByTransactionId(transactionId);
         txn.setShareAmount(shareAmount);
         txn.setSharePrice(sharePrice);
         txn.setNote(note);
+        txn.setDate(date);
     }
 
     @Override
