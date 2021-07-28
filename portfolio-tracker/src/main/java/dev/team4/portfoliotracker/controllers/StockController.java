@@ -15,6 +15,7 @@ import dev.team4.portfoliotracker.services.StockService;
 import dev.team4.portfoliotracker.models.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/stocks")
 public class StockController {
 	

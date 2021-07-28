@@ -1,7 +1,7 @@
 package dev.team4.portfoliotracker.controllers;
 
 import dev.team4.portfoliotracker.models.User;
-import dev.team4.portfoliotracker.services.UserDetailsService;
+import dev.team4.portfoliotracker.services.UserService;
 import dev.team4.portfoliotracker.security.AuthenticationRequest;
 import dev.team4.portfoliotracker.security.AuthenticationResponse;
 import dev.team4.portfoliotracker.security.JwtUtility;
@@ -23,14 +23,14 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     @Autowired
     private JwtUtility jwtUtility;
 
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createNewUser(@RequestBody User user){
-        return new ResponseEntity<User>(userDetailsService.createUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @DeleteMapping(consumes = "application/json")
@@ -38,14 +38,14 @@ public class UserController {
         return HttpStatus.OK;
     }
 
-    @RequestMapping(value ="/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value ="/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
             throw new Exception("Incorrect username or password, please try again.");
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtility.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

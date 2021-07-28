@@ -1,6 +1,6 @@
 package dev.team4.portfoliotracker.security;
 
-import dev.team4.portfoliotracker.services.UserDetailsService;
+import dev.team4.portfoliotracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,14 +17,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     @Autowired
     private RequestFilter requestFilter;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userService);
     }
 
     @Override

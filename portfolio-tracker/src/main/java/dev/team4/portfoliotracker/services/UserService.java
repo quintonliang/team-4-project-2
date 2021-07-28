@@ -5,17 +5,18 @@ import dev.team4.portfoliotracker.repositories.UserRepository;
 import dev.team4.portfoliotracker.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public dev.team4.portfoliotracker.models.User createUser(dev.team4.portfoliotracker.models.User user){
+    public User createUser(User user){
         return userRepository.save(user);
     }
 

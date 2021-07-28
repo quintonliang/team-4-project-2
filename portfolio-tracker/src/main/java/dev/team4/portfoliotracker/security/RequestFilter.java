@@ -1,6 +1,6 @@
 package dev.team4.portfoliotracker.security;
 
-import dev.team4.portfoliotracker.services.UserDetailsService;
+import dev.team4.portfoliotracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class RequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     @Autowired
     private JwtUtility jwtUtility;
@@ -37,7 +37,7 @@ public class RequestFilter extends OncePerRequestFilter {
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication()==null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = this.userService.loadUserByUsername(username);
             if(jwtUtility.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
