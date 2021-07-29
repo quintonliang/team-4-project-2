@@ -2,10 +2,19 @@ const root = document.getElementById("app-root");
 window.addEventListener("load", route);
 window.addEventListener("hashchange", route);
 
+const token = sessionStorage.getItem("Authorization");
+function hasToken(){
+    if(sessionStorage.getItem("Authorization")!=null && sessionStorage.getItem("Authorization")!=undefined){
+        return "home";
+    } else {
+        return "login";
+    }
+}
+
 
 // when #/all -> fetch "components/directory-component/directory.component.html"
 const routes = [
-    {path: "", componentFileName: "home"},
+    {path: "", componentFileName: {hasToken}},
     {path: "#/all", componentFileName: "directory"},
     {path: "#/new", componentFileName: "new-track"},
     {path: "#/login", componentFileName: "login"},
